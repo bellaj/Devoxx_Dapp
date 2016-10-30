@@ -1,0 +1,41 @@
+<html>
+<head>
+  <!-- updated 25/10/14 -->
+  <title>Devoxx Registration Dapp</title>
+  
+    <script type="text/javascript" src="./web3js/web3.min.js"></script>
+     <link rel="stylesheet" href="vote.css">
+
+  <script src="functions.js"></script>
+
+</head>
+
+<body onload="get_accounts_()">
+
+<div class="content">
+ <label id="account_number">Account : </label><select id="account" onChange="check_balance();"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>  <label id="account_balance" style="float:right;"> </label>
+
+<br>
+<br>
+ <label>Attendee Regisration : </label><br><br>
+<label>Name </label>  <input id="name_attendee" type="text"></input><br><br>
+<label>Payment </label>  <input id="attendee_pay" type="text"></input><br>
+
+<button id="yes" onclick="register_attendee()"> Register</button>
+<label id="attendee_message">Message : </label>
+</div>
+
+<div class="content">
+
+<label>Speaker Regisration : </label><br><br>
+<label>Name </label>  <input type="text"></input><br><br>
+<label>keynote Title </label>  <input type="text"></input><br>
+<button id="yes" onclick="register_speaker()"> Register</button>
+ 
+</div>
+<div class="content">
+
+<label>Contract Address </label>  <input type="contract_address"></input>
+</div>
+</body>
+</html>
