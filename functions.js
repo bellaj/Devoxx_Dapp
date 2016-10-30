@@ -44,23 +44,30 @@ function register_attendee(){
 	 var transactionObject = {from: account_,value: web3.toWei(payment, "ether"),gas: 500000}; // with donation of 1Ether //cost of tx is 21000 wei //web3.toWei Converts an ethereum unit into wei.
 
 	 var name= document.getElementById("name_attendee");
+	 
+/*	var filter =contractInstance.attendee_added({},function(error, result) {
+          if (!error) {
+		  document.getElementById("attendee_message").innerHTML ='Result :'+ result.args.msg; console.log(result.args.msg);  } else document.getElementById("attendee_message").innerHTML ='Error :'+ error; 
 
+});	 
+
+filter.watch(function(error, result){
+  if (!error)
+    console.log(result);
+});
+*/
    var TxHash = contractInstance["register_attendee"].sendTransaction(name, {from: account_}, function(err, address) {
-     console.log(address);
+    // console.log(address);
    });
    
 
-   //myContractInstance.myMethod.sendTransaction(param1 [, param2, ...] [, transactionObject] [, callback]);
-
-	/* //event
-	contractInstance.attendee_added().watch(function(error, result) {
-          if (!error) {
-		  document.getElementById("attendee_message").innerHTML ='Result :'+ web3.eth.coinbase;  } else document.getElementById("attendee_message").innerHTML ='Error :'+ error; 
-
-});	*/
-
+	
 }
-
+   var contractEvent = contractInstance["attendee_added"];
+    contractEvent({}).watch(function(error, result){
+  if (!error)
+    console.log(result.args.id);document.getElementById("attendee_message").innerHTML ='your ID is '+ result.args.id;
+});
 function check_balance(){
 		 var e = document.getElementById("account");
 	     var name=document.getElementById("name_attendee").value;
