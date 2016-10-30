@@ -18,7 +18,7 @@ var abiArray =[{"constant":false,"inputs":[{"name":"name_","type":"string"}],"na
 
 var MyContract = web3.eth.contract(abiArray);
 var contract_address="0xabf40faa5b08bed95023e974c6d4a9eb50ea85f8";
-var contractInstance = MyContract.at(contract_address);//   Instantiate from an existing address, PLEASE BE CAREFUL TO SPACES
+var contractInstance = MyContract.at("0xabf40faa5b08bed95023e974c6d4a9eb50ea85f8");//   Instantiate from an existing address, PLEASE BE CAREFUL TO SPACES
  
  /*********************************************** *********************************************************/	  
 function get_accounts_() //get the number of the existent accounts 
@@ -31,7 +31,13 @@ function get_accounts_() //get the number of the existent accounts
 
 function register_attendee(){ 
 	
- 
+     var e = document.getElementById("account");
+	 var name=document.getElementById("name_attendee").value;
+	 var acc =e.options[e.selectedIndex].value;
+	 var account_=web3.eth.accounts[acc];
+	 var payment = document.getElementById("attendee_pay").value;
+
+
 	 var transactionObject = {from: account_,value: web3.toWei(payment, "ether"),gas: 500000}; // the gasprice is not indicated is set to default;
      //One transaction costs at least 21000 gas  //web3.toWei Converts an ethereum unit into wei.
 	 //gas = (optional, default: To-Be-Determined) The amount of gas to use for the transaction (unused gas is refunded).
@@ -40,10 +46,10 @@ function register_attendee(){
 
 	 var name= document.getElementById("name_attendee");
  
-   var TxHash = contractInstance["register_attendee"].sendTransaction(name, {from: account_}, function(err, address) {
+     var TxHash = contractInstance["register_attendee"].sendTransaction(name, {from: account_}, function(err, address) {
     // console.log(address);
    });
-   	
+ 
 }
  /***********************************************Listening to upcoming Events (successful registration) *********************************************************/	  
 
@@ -55,6 +61,7 @@ function register_attendee(){
 
  /***********************************************check the balance of an account *********************************************************/	  
 function check_balance(){ //get the number of the existent accounts 
+
 		 var e = document.getElementById("account");
 	     var name=document.getElementById("name_attendee").value;
 	     var acc =e.options[e.selectedIndex].value;
@@ -66,19 +73,28 @@ function check_balance(){ //get the number of the existent accounts
   /*********************************************** Register speaker *********************************************************/	  
 
 function register_speaker(){ 
+
 	 var e = document.getElementById("account");
 	 var name=document.getElementById("name_speaker").value;
 	 var acc =e.options[e.selectedIndex].value;
 	 var account_=web3.eth.accounts[acc];
-	 var payment = document.getElementById("speaker_pay").value;
+	 var payment = 0;
  
 	 var transactionObject = {from: account_,value: web3.toWei(payment, "ether"),gas: 500000}; // cost of tx is 21000 wei //web3.toWei Converts an ethereum unit into wei.
 
 	 var name= document.getElementById("name_speaker");
 	 var keynote= document.getElementById("keynote");
  
-   var TxHash = contractInstance["register_speaker"].sendTransaction(name, {from: account_}, function(err, address) {
+   var TxHash = contractInstance["register_speaker"].sendTransaction(name,keynote, {from: account_}, function(err, address) {
     // console.log(address);
    });
    	
 }
+
+ /***********************************************Listening to upcoming Events (successful registration) *********************************************************/	  
+
+   var FilterEvent = contractInstance["speaker_added"]; //filter
+    FilterEvent({}).watch(function(error, result){
+  if (!error)
+    console.log(result.args.id);document.getElementById("speaker_message").innerHTML ='your ID is '+ result.args.id;
+});

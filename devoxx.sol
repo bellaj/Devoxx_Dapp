@@ -1,15 +1,15 @@
 pragma solidity ^0.4.0;
 
 contract Devoxx{
- 
+
 uint public attendee_number=0;
 uint public speaker_number=0;
 
 struct attendee{
-    uint256 id_a; 
+    uint256 id_a;
     address attendee_ad;
     string name;
- 
+
 }
 
 struct speaker{
@@ -24,11 +24,11 @@ struct speaker{
 
 mapping(address =>attendee) attendees;
 mapping(address =>speaker) speakers;
- 
+
 event attendee_added(uint256 indexed id);
 
 function register_attendee(string name_) returns (uint256) {
-     
+
    // attendees[msg.sender].balance=msg.value;
     attendees[msg.sender].attendee_ad=msg.sender;
     attendees[msg.sender].name=name_;
@@ -38,29 +38,32 @@ function register_attendee(string name_) returns (uint256) {
     return attendee_number;
 }
 
-function register_speaker(string name_,string talk) {
-     
-    
-   // attendees[msg.sender].balance=msg.value;
+event speaker_added(uint256 indexed id);
+
+function register_speaker(string name_,string talk) returns (uint256) {
+
+
     speakers[msg.sender].speaker_ad=msg.sender;
     speakers[msg.sender].talk_title=talk;
     speakers[msg.sender].id_s=speaker_number;
-    attendees[msg.sender].name=name_;
+    speakers[msg.sender].name=name_;
+    speaker_added(speaker_number);
     speaker_number++;
+    return speaker_number;
 }
 
 function get_attendee(address id_)internal returns (attendee)  {
-     
+
    return attendees[id_];
 }
 
 function get_speaker(address id_)internal returns (speaker)  {
-     
+
    return speakers[id_];
 }
 
 function evaluate_speaker(address address_speaker,uint256 evaluation){
-     
+
    speakers[address_speaker].evaluation=evaluation;
 }
 
@@ -69,14 +72,13 @@ function () payable { //donation
     thankyou(msg.value);
 }
 
- function reward_best_speaker() returns (bool){
-     uint best_score=0;
-     for(uint i=0;i<speaker_number;i++)
+ function reward_best_speaker(address speaker_ad,uint256 reward) returns (bool){
+    if(reward<this.balance)
     {
-        
+        if(!speaker_ad.send(reward))
+    throw;
     }
-     
      return true;
  }
-	
+
 }
