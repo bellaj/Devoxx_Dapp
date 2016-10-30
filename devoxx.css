@@ -3,7 +3,7 @@
     background: #fefefe;
      
     max-width: 600px;
-    margin: 90px auto;
+    margin: 40px auto;
     padding: 32px;
     border-radius: 1px;
     box-shadow: rgba(0,0,0,0.2) 0 2px 8px;
@@ -25,9 +25,10 @@
  
  }
  
- 
+ 	label {   }
  
 input {
-	
+	display: table-cell;
 	left: 100px;
 }
+ 

@@ -4,19 +4,23 @@
   <title>Devoxx Registration Dapp</title>
   
     <script type="text/javascript" src="./web3js/web3.min.js"></script>
-     <link rel="stylesheet" href="vote.css">
+     <link rel="stylesheet" href="devoxx.css">
 
   <script src="functions.js"></script>
 
 </head>
 
 <body onload="get_accounts_()">
-
+<img src="./img/logo.png">  
 <div class="content">
+ <label>Contract settings : </label><br>
+<label>Contract Address </label>  <input  type="text" id="contract_address_" value="0xabf40faa5b08bed95023e974c6d4a9eb50ea85f8"></input><br> 
+<!-- we use different account because this demo is running in a single node and we need more than account to test the Dapp-->
+<!-- the number of the account is set arbitary we could write a js script to generate the select items upon the real number of account check get_accounts_() -->
  <label id="account_number">Account : </label><select id="account" onChange="check_balance();"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>  <label id="account_balance" style="float:right;"> </label>
-
-<br>
-<br>
+</div>
+<div class="content">
+ 
  <label>Attendee Regisration : </label><br><br>
 <label>Name </label>  <input id="name_attendee" type="text"></input><br><br>
 <label>Payment </label>  <input id="attendee_pay" type="text"></input><br>
@@ -28,14 +32,12 @@
 <div class="content">
 
 <label>Speaker Regisration : </label><br><br>
-<label>Name </label>  <input type="text"></input><br><br>
-<label>keynote Title </label>  <input type="text"></input><br>
+<label>Name </label>  <input type="text"  id="name_speaker" ></input><br><br>
+<label>keynote Title </label>  <input type="text" id="keynote"></input><br>
 <button id="yes" onclick="register_speaker()"> Register</button>
- 
-</div>
-<div class="content">
+ <label id="speaker_message">Message : </label>
 
-<label>Contract Address </label>  <input type="contract_address"></input>
 </div>
+
 </body>
 </html>
