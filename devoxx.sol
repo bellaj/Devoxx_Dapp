@@ -52,14 +52,14 @@ function register_speaker(string name_,string talk) returns (uint256) {
     return speaker_number;
 }
 
-function get_attendee(address id_)internal returns (attendee)  {
+function get_attendee(address id_) returns (string)  {
 
-   return attendees[id_];
+   return attendees[id_].name;
 }
 
-function get_speaker(address id_)internal returns (speaker)  {
+function get_speaker(address id_) returns (string)  {
 
-   return speakers[id_];
+   return speakers[id_].name;
 }
 
 function evaluate_speaker(address address_speaker,uint256 evaluation){
@@ -67,9 +67,9 @@ function evaluate_speaker(address address_speaker,uint256 evaluation){
    speakers[address_speaker].evaluation=evaluation;
 }
 
-event thankyou(uint256 indexed i);
-function () payable { //donation
-    thankyou(msg.value);
+event thankyou(uint256 indexed amount);
+function () payable { //donation or payement
+  //  thankyou(msg.value);
 }
 
  function reward_best_speaker(address speaker_ad,uint256 reward) returns (bool){
